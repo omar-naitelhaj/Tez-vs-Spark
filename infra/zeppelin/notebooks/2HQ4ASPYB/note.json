@@ -1,0 +1,108 @@
+{
+  "paragraphs": [
+    {
+      "text": "%pyspark\n\nif __name__ \u003d\u003d \u0027__main__\u0027:\n    conf \u003d SparkConf()\n    sc \u003d SparkContext.getOrCreate(conf\u003dconf)\n    \n    spark \u003d Spark \u003d SparkSession(sc).builder.appName(\"Read-and-write-data-to-Hive-table-spark\").config(\"hive.metastore.uris\", \"thrift://hive-hive-metastore-1:9083\").enableHiveSupport().getOrCreate()",
+      "user": "anonymous",
+      "dateUpdated": "Dec 20, 2022 6:00:07 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python"
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1671558179807_-1222842672",
+      "id": "20221220-174259_2139001467",
+      "dateCreated": "Dec 20, 2022 5:42:59 PM",
+      "dateStarted": "Dec 20, 2022 6:00:07 PM",
+      "dateFinished": "Dec 20, 2022 6:00:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\ndatafile \u003d spark.read.csv(\"friends.csv\",header\u003dTrue, inferSchema\u003dTrue)",
+      "user": "anonymous",
+      "dateUpdated": "Dec 20, 2022 6:01:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {}
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-3683034829726153046.py\", line 349, in \u003cmodule\u003e\n    raise Exception(traceback.format_exc())\nException: Traceback (most recent call last):\n  File \"/tmp/zeppelin_pyspark-3683034829726153046.py\", line 342, in \u003cmodule\u003e\n    exec(code)\n  File \"\u003cstdin\u003e\", line 1, in \u003cmodule\u003e\n  File \"/spark/python/pyspark/sql/readwriter.py\", line 380, in csv\n    return self._df(self._jreader.csv(self._spark._sc._jvm.PythonUtils.toSeq(path)))\n  File \"/spark/python/lib/py4j-0.10.4-src.zip/py4j/java_gateway.py\", line 1133, in __call__\n    answer, self.gateway_client, self.target_id, self.name)\n  File \"/spark/python/pyspark/sql/utils.py\", line 63, in deco\n    return f(*a, **kw)\n  File \"/spark/python/lib/py4j-0.10.4-src.zip/py4j/protocol.py\", line 319, in get_return_value\n    format(target_id, \".\", name), value)\nPy4JJavaError: An error occurred while calling o547.csv.\n: org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 7.0 failed 4 times, most recent failure: Lost task 0.3 in stage 7.0 (TID 31, 172.19.0.10, executor 0): java.io.FileNotFoundException: File file:/opt/zeppelin/friends.csv does not exist\n\tat org.apache.hadoop.fs.RawLocalFileSystem.deprecatedGetFileStatus(RawLocalFileSystem.java:611)\n\tat org.apache.hadoop.fs.RawLocalFileSystem.getFileLinkStatusInternal(RawLocalFileSystem.java:824)\n\tat org.apache.hadoop.fs.RawLocalFileSystem.getFileStatus(RawLocalFileSystem.java:601)\n\tat org.apache.hadoop.fs.FilterFileSystem.getFileStatus(FilterFileSystem.java:421)\n\tat org.apache.hadoop.fs.ChecksumFileSystem$ChecksumFSInputChecker.\u003cinit\u003e(ChecksumFileSystem.java:142)\n\tat org.apache.hadoop.fs.ChecksumFileSystem.open(ChecksumFileSystem.java:346)\n\tat org.apache.hadoop.fs.FileSystem.open(FileSystem.java:769)\n\tat org.apache.hadoop.mapred.LineRecordReader.\u003cinit\u003e(LineRecordReader.java:109)\n\tat org.apache.hadoop.mapred.TextInputFormat.getRecordReader(TextInputFormat.java:67)\n\tat org.apache.spark.rdd.HadoopRDD$$anon$1.liftedTree1$1(HadoopRDD.scala:252)\n\tat org.apache.spark.rdd.HadoopRDD$$anon$1.\u003cinit\u003e(HadoopRDD.scala:251)\n\tat org.apache.spark.rdd.HadoopRDD.compute(HadoopRDD.scala:211)\n\tat org.apache.spark.rdd.HadoopRDD.compute(HadoopRDD.scala:102)\n\tat org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:323)\n\tat org.apache.spark.rdd.RDD.iterator(RDD.scala:287)\n\tat org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)\n\tat org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:323)\n\tat org.apache.spark.rdd.RDD.iterator(RDD.scala:287)\n\tat org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)\n\tat org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:323)\n\tat org.apache.spark.rdd.RDD.iterator(RDD.scala:287)\n\tat org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:87)\n\tat org.apache.spark.scheduler.Task.run(Task.scala:99)\n\tat org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:322)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\n\tat java.lang.Thread.run(Thread.java:745)\n\nDriver stacktrace:\n\tat org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1435)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1423)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1422)\n\tat scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)\n\tat scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:48)\n\tat org.apache.spark.scheduler.DAGScheduler.abortStage(DAGScheduler.scala:1422)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:802)\n\tat org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:802)\n\tat scala.Option.foreach(Option.scala:257)\n\tat org.apache.spark.scheduler.DAGScheduler.handleTaskSetFailed(DAGScheduler.scala:802)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1650)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1605)\n\tat org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1594)\n\tat org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)\n\tat org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:628)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1925)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1938)\n\tat org.apache.spark.SparkContext.runJob(SparkContext.scala:1951)\n\tat org.apache.spark.rdd.RDD$$anonfun$take$1.apply(RDD.scala:1354)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:362)\n\tat org.apache.spark.rdd.RDD.take(RDD.scala:1327)\n\tat org.apache.spark.rdd.RDD$$anonfun$first$1.apply(RDD.scala:1368)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:151)\n\tat org.apache.spark.rdd.RDDOperationScope$.withScope(RDDOperationScope.scala:112)\n\tat org.apache.spark.rdd.RDD.withScope(RDD.scala:362)\n\tat org.apache.spark.rdd.RDD.first(RDD.scala:1367)\n\tat org.apache.spark.sql.execution.datasources.csv.CSVFileFormat.findFirstLine(CSVFileFormat.scala:206)\n\tat org.apache.spark.sql.execution.datasources.csv.CSVFileFormat.inferSchema(CSVFileFormat.scala:60)\n\tat org.apache.spark.sql.execution.datasources.DataSource$$anonfun$7.apply(DataSource.scala:184)\n\tat org.apache.spark.sql.execution.datasources.DataSource$$anonfun$7.apply(DataSource.scala:184)\n\tat scala.Option.orElse(Option.scala:289)\n\tat org.apache.spark.sql.execution.datasources.DataSource.org$apache$spark$sql$execution$datasources$DataSource$$getOrInferFileFormatSchema(DataSource.scala:183)\n\tat org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:387)\n\tat org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:152)\n\tat org.apache.spark.sql.DataFrameReader.csv(DataFrameReader.scala:415)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:498)\n\tat py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)\n\tat py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357)\n\tat py4j.Gateway.invoke(Gateway.java:280)\n\tat py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)\n\tat py4j.commands.CallCommand.execute(CallCommand.java:79)\n\tat py4j.GatewayConnection.run(GatewayConnection.java:214)\n\tat java.lang.Thread.run(Thread.java:745)\nCaused by: java.io.FileNotFoundException: File file:/opt/zeppelin/friends.csv does not exist\n\tat org.apache.hadoop.fs.RawLocalFileSystem.deprecatedGetFileStatus(RawLocalFileSystem.java:611)\n\tat org.apache.hadoop.fs.RawLocalFileSystem.getFileLinkStatusInternal(RawLocalFileSystem.java:824)\n\tat org.apache.hadoop.fs.RawLocalFileSystem.getFileStatus(RawLocalFileSystem.java:601)\n\tat org.apache.hadoop.fs.FilterFileSystem.getFileStatus(FilterFileSystem.java:421)\n\tat org.apache.hadoop.fs.ChecksumFileSystem$ChecksumFSInputChecker.\u003cinit\u003e(ChecksumFileSystem.java:142)\n\tat org.apache.hadoop.fs.ChecksumFileSystem.open(ChecksumFileSystem.java:346)\n\tat org.apache.hadoop.fs.FileSystem.open(FileSystem.java:769)\n\tat org.apache.hadoop.mapred.LineRecordReader.\u003cinit\u003e(LineRecordReader.java:109)\n\tat org.apache.hadoop.mapred.TextInputFormat.getRecordReader(TextInputFormat.java:67)\n\tat org.apache.spark.rdd.HadoopRDD$$anon$1.liftedTree1$1(HadoopRDD.scala:252)\n\tat org.apache.spark.rdd.HadoopRDD$$anon$1.\u003cinit\u003e(HadoopRDD.scala:251)\n\tat org.apache.spark.rdd.HadoopRDD.compute(HadoopRDD.scala:211)\n\tat org.apache.spark.rdd.HadoopRDD.compute(HadoopRDD.scala:102)\n\tat org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:323)\n\tat org.apache.spark.rdd.RDD.iterator(RDD.scala:287)\n\tat org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)\n\tat org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:323)\n\tat org.apache.spark.rdd.RDD.iterator(RDD.scala:287)\n\tat org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)\n\tat org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:323)\n\tat org.apache.spark.rdd.RDD.iterator(RDD.scala:287)\n\tat org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:87)\n\tat org.apache.spark.scheduler.Task.run(Task.scala:99)\n\tat org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:322)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\n\t... 1 more\n\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1671558185664_-968123576",
+      "id": "20221220-174305_2031519769",
+      "dateCreated": "Dec 20, 2022 5:43:05 PM",
+      "dateStarted": "Dec 20, 2022 6:01:03 PM",
+      "dateFinished": "Dec 20, 2022 6:01:04 PM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "Dec 20, 2022 5:51:41 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1671558701273_-1767311628",
+      "id": "20221220-175141_859463140",
+      "dateCreated": "Dec 20, 2022 5:51:41 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "tessst",
+  "id": "2HQ4ASPYB",
+  "angularObjects": {
+    "2HMHJ52NC:shared_process": [],
+    "2HM8F9W1B:shared_process": [],
+    "2HN4A7F2W:shared_process": [],
+    "2HKRMMEMN:shared_process": [],
+    "2HN6A6PBV:shared_process": [],
+    "2HM6EQXZE:shared_process": [],
+    "2HMP8MTMT:shared_process": [],
+    "2HNQ7DC25:shared_process": [],
+    "2HMN1JVV5:shared_process": [],
+    "2HMQNRS81:shared_process": [],
+    "2HNCDAGUD:shared_process": [],
+    "2HKW83VND:shared_process": [],
+    "2HKBWXDFU:shared_process": [],
+    "2HNP2S429:shared_process": [],
+    "2HKTTM5SR:shared_process": [],
+    "2HK5NCM8U:shared_process": [],
+    "2HNNJ738N:shared_process": [],
+    "2HKP6YUUS:shared_process": [],
+    "2HJMFEZUV:shared_process": [],
+    "2HMH9FWBH:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

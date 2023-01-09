@@ -1,0 +1,62 @@
+{
+  "paragraphs": [
+    {
+      "text": "%pyspark\n\nif __name__ \u003d\u003d \u0027__main__\u0027:\n    conf \u003d SparkConf()\n    sc \u003d SparkContext.getOrCreate(conf\u003dconf)\n    \n    spark \u003d Spark \u003d SparkSession(sc).builder.appName(\"Read-and-write-data-to-Hive-table-spark\").config(\"hive.metastore.uris\", \"thrift://hive-hive-metastore-1:9083\").enableHiveSupport().getOrCreate()",
+      "user": "anonymous",
+      "dateUpdated": "Dec 20, 2022 5:41:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "text",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/text"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "ERROR",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "paragraph_1668775559968_-1562816601\u0027s Interpreter spark.pyspark not found"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1668775559968_-1562816601",
+      "id": "20221118-124559_515655831",
+      "dateCreated": "Nov 18, 2022 12:45:59 PM",
+      "dateStarted": "Nov 18, 2022 1:39:15 PM",
+      "dateFinished": "Nov 18, 2022 1:39:17 PM",
+      "status": "ERROR",
+      "errorMessage": "org.apache.zeppelin.interpreter.InterpreterException: paragraph_1668775559968_-1562816601\u0027s Interpreter spark.pyspark not found\n\tat org.apache.zeppelin.notebook.Note.run(Note.java:605)\n\tat org.apache.zeppelin.socket.NotebookServer.persistAndExecuteSingleParagraph(NotebookServer.java:1641)\n\tat org.apache.zeppelin.socket.NotebookServer.runParagraph(NotebookServer.java:1615)\n\tat org.apache.zeppelin.socket.NotebookServer.onMessage(NotebookServer.java:265)\n\tat org.apache.zeppelin.socket.NotebookSocket.onWebSocketText(NotebookSocket.java:59)\n\tat org.eclipse.jetty.websocket.common.events.JettyListenerEventDriver.onTextMessage(JettyListenerEventDriver.java:128)\n\tat org.eclipse.jetty.websocket.common.message.SimpleTextMessage.messageComplete(SimpleTextMessage.java:69)\n\tat org.eclipse.jetty.websocket.common.events.AbstractEventDriver.appendMessage(AbstractEventDriver.java:65)\n\tat org.eclipse.jetty.websocket.common.events.JettyListenerEventDriver.onTextFrame(JettyListenerEventDriver.java:122)\n\tat org.eclipse.jetty.websocket.common.events.AbstractEventDriver.incomingFrame(AbstractEventDriver.java:161)\n\tat org.eclipse.jetty.websocket.common.WebSocketSession.incomingFrame(WebSocketSession.java:309)\n\tat org.eclipse.jetty.websocket.common.extensions.ExtensionStack.incomingFrame(ExtensionStack.java:214)\n\tat org.eclipse.jetty.websocket.common.Parser.notifyFrame(Parser.java:220)\n\tat org.eclipse.jetty.websocket.common.Parser.parse(Parser.java:258)\n\tat org.eclipse.jetty.websocket.common.io.AbstractWebSocketConnection.readParse(AbstractWebSocketConnection.java:632)\n\tat org.eclipse.jetty.websocket.common.io.AbstractWebSocketConnection.onFillable(AbstractWebSocketConnection.java:480)\n\tat org.eclipse.jetty.io.AbstractConnection$2.run(AbstractConnection.java:544)\n\tat org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:635)\n\tat org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:555)\n\tat java.lang.Thread.run(Thread.java:745)\n",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%hive\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 18, 2022 1:53:17 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1668779597286_-1356139393",
+      "id": "20221118-135317_902687780",
+      "dateCreated": "Nov 18, 2022 1:53:17 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "test",
+  "id": "2HMBXE7VC",
+  "angularObjects": {},
+  "config": {},
+  "info": {}
+}
