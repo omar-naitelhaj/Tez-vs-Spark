@@ -1,159 +1,88 @@
-<<<<<<< HEAD
-# Tez-vs-Spark
-Comparaison entre Apache Tez et Apache Spark en termes de traitement de données et l’automatisation d’un pipeline de données en utilisant Apache Tez.
-=======
-Spark Playground
-================
-Apache Spark playground
-
-###  Examples
-1. [Spark Batch](./spark-batch)
-2. [Spark Streaming](./spark-streaming)
-3. [Spark Machine Learning](./spark-ml)
+# Comparaison entre Apache Tez et Apache Spark en termes de traitement de données et l’automatisation d’un pipeline de données en utilisant Apache Tez.
 
 
-### Prerequisites
-1. Gradle > 4.7 [ Install via [sdkman](http://sdkman.io/)]
-2. Docker for Mac [[Setup Instructions](./docs/Docker.md)]
-3. Apache Spark [[Download Link](https://spark.apache.org/downloads.html)]
+## 1-	Installation
 
-#### Install spark via SDKMAN (Preferred for Windows and Mac users)
-```bash
-# install spark v2.1.1 or you prefered version.
-# this will give you access to spark-shell, spark-submit CLI
-sdk ls spark
-sdk i spark 2.1.1
-```
+Voici le contenu du fichier « docker-compose.yml », il est composé de 12 services, « zeppelin », « namenode », « datanode », « spark-master », « spark-worker », « hue», « pig », « hive-server », « hive-metastore », « hive-metastore-postgresql », « zookeeper », « presto-coordinator »
 
-#### Install spark via brew (Mac)
-```bash
-# As an alternative, you can install spark via brew on Mac
-brew update
-brew install apache-spark
-# verifying installation
-spark-shell
-```
+![image](https://user-images.githubusercontent.com/77858969/211403743-b8ccca6f-308d-4802-94c3-fc48cd42ba79.png)
 
-#### Install spark via downloading
-    
-    Download `spark-x.x.x-bin-hadoop2.7.tgz` from  https://spark.apache.org/downloads.html
-    Install Spark by unpacking i.e., /Developer/Applications/spark-2.2.0-bin-hadoop2.7
+Afin de lancer toutes les images créées dans des conteneurs dans le même cluster, on tape la commande suivante : « docker-compose up -d »
 
-### Build
+![image](https://user-images.githubusercontent.com/77858969/211403877-95a1b6c2-ed78-4a6a-8cf3-30a266470442.png)
 
-```bash
-gradle shadowJar
-# skip tests
-gradle shadowJar -x test
-```
+Apres on doit verifier que tous les service running:
 
-### Start Standalone Spark Cluster
-```bash
-# run foreground
-docker-compose up spark-master
-docker-compose up spark-worker
-docker-compose up zeppelin
-# scall up workers if needed
-docker-compose scale spark-worker=2
-# to restart any container 
-docker-compose restart spark-master
-# to shutdown
-docker-compose down
-# to see ports of workers bind to host
-docker-compose ps
-# to see logs
-docker-compose logs -f zeppelin
-# ssh to a service(master)
-docker-compose exec spark-master bash
-hadoop fs -ls /data/in
-```
+![image](https://user-images.githubusercontent.com/77858969/211403969-2b8a30ef-229d-45b5-b64c-1a3943ea4449.png)
 
-The SparkUI will be running at `http://${YOUR_DOCKER_HOST or localhost}:8080` with one worker listed.
+## 2-	Configuration
 
-### Run
+On accède au bash du service « zeppelin »
 
-> Set your environment path to spark commands, if you installed spark via downloading
-```bash
-SPARK_HOME=/Developer/Applications/spark-2.2.0-bin-hadoop2.7
-PATH=$PATH:$SPARK_HOME/bin
-# set this, if you get Error: WARN Utils: Service 'sparkDriver' could not bind on port 0. Attempting port 1.
-export SPARK_LOCAL_IP="127.0.0.1" 
-```
+![image](https://user-images.githubusercontent.com/77858969/211404135-4366a9ba-d174-49fc-8d98-538a7ca57ab3.png)
 
-#### Spark Shell
+On se déplace au sein du dossier « jdbc », et on installe les deux « Jars », « hadoop-common-2.6.0.jar » et « hive-jdbc-2.3.2-standalone.jar »
 
-> To open Spark Shell
-```bash
-spark-shell --master spark://localhost:7077
-# or with docker-compose
-    docker-compose exec spark-master bash
-    # start spark shell with in this bash
-    spark-shell --master spark://spark-master:7077
-    # or run example `SparkPi` job
-    run-example SparkPi 10
-```
+![image](https://user-images.githubusercontent.com/77858969/211404325-bb6b6f9f-29bc-4622-81a8-0f2c7cf7ec18.png)
+![image](https://user-images.githubusercontent.com/77858969/211404345-0249588a-47b0-40e7-b3c1-4025f9a188dc.png)
 
-#### Running Locally
-    
-```bash
-# Submit Local
-spark-submit \
-    --class com.sumo.experiments.BatchJobKt \
-    --master local[2] \
-    spark-batch/build/libs/spark-batch-0.1.0-SNAPSHOT-all.jar
-    
-spark-submit \
-    --class com.sumo.experiments.LoadJobKt \
-    --master local[2] \
-    --properties-file application.properties \
-    spark-batch/build/libs/spark-batch-0.1.0-SNAPSHOT-all.jar
-```
+Dans zeppelin, on crée un nouveau interpreteur “hive”, on choisit le groupe “jdbc”, et on ajoute la configuration suivante
 
-In IDEs like IntelliJ, you can right-click the file and run directly.
+![image](https://user-images.githubusercontent.com/77858969/211404404-ed8eec25-cf90-4ccc-81f0-c1291d74c06b.png)
+![image](https://user-images.githubusercontent.com/77858969/211404434-831e8b65-42f6-439b-8f9e-f04dcbb003a2.png)
 
-#### Launching on a Cluster
+Il nous reste que copier le dataset dans l’OS du container « zeppelin », afin d’y accéder via le notebook « spark »
 
-```bash
-# Submit to Cluster
-spark-submit \
-    --class com.sumo.experiments.BatchJobKt \
-    --master spark://localhost:7077 \
-    spark-batch/build/libs/spark-batch-0.1.0-SNAPSHOT-all.jar
+![image](https://user-images.githubusercontent.com/77858969/211404509-5a28f8fc-403c-4e16-9fa1-8128ed41e18c.png)
 
-spark-submit \
-    --class com.sumo.experiments.LoadJobKt \
-    --master spark://localhost:7077 \
-    --properties-file application-prod.properties \
-    spark-batch/build/libs/spark-batch-0.1.0-SNAPSHOT-all.jar
+## 3-	Manipulation avec Spark/Hive/Tez
 
-nohup spark-submit \
-    --class com.sumo.experiments.LoadJobKt \
-    --master yarn \
-    --queue abcd \
-    --num-executors 2 \
-    --executor-memory 2G \
-    --properties-file application-prod.properties \
-    spark-batch/build/libs/spark-batch-0.1.0-SNAPSHOT-all.jar arg1 arg2 > app.log 2>&1 &
-```
+On va tester les commandes suivantes dans SparkSQL et Hive avec mapreduce et avec tez et aussi Pig avec MR et avec tez:
+<ul>
+  <li>SELECT * FROM diabetes</li>
+  <li>SELECT age,count(*) FROM diabetes GROUP BY age</li>
+  <li>SELECT age,avg(BMI),avg(Insulin),avg(SkinThickness) FROM diabetes GROUP BY age</li>
+  <li>SELECT age,avg(Outcome) as meanOutcome FROM diabetes GROUP BY age ORDER BY meanOutcome4</li>
+</ul>
 
-### Gradle Commands
-```bash
-# upgrade project gradle version
-gradle wrapper --gradle-version 5.0 --distribution-type all
-# gradle daemon status 
-gradle --status
-gradle --stop
-# refresh dependencies
-gradle build --refresh-dependencies
-```
+Pour hive avec map reduce on va utuliser : set hive.execution.engine = mr;
+Pour hive avec tez on va utuliser : set hive.execution.engine = tez;
 
-### Reference 
-* https://bigdatagurus.wordpress.com/2017/03/01/how-to-start-spark-cluster-in-minutes/
-* https://zeppelin.apache.org/docs/0.7.2/install/cdh.html
-* https://spark.apache.org/examples.html
-* https://github.com/cliftbar/etl-stack/blob/master/docker-compose.yml
-* https://github.com/big-data-europe/docker-hive
-* https://github.com/SANSA-Stack/SANSA-Notebooks/tree/develop
- 
+Pour pig avec map reduce c'est le moteur par defaut.
+Pour pig avec tez on va changer l'interpreter:
 
->>>>>>> dc90698 (Projet Tez vs Spark)
+![image](https://user-images.githubusercontent.com/77858969/211406485-93c0e631-ba5a-4f99-ba3b-69a61e6374f1.png)
+
+## 4-	Pipeline ETL
+
+Pour la partie d’apache airflow, on lance la première commande de docker-compose pour airflow init :
+
+![image](https://user-images.githubusercontent.com/77858969/211406976-d2f3b5bb-3822-48e4-9163-5cb3014a2a4a.png)
+
+Puis on lance le docker-compose up pour executer notre contenaire :
+
+![image](https://user-images.githubusercontent.com/77858969/211407032-dbe1614a-7b1d-463e-a02a-32ab40f9ef46.png)
+
+Notre centenaire est en cours d’exécution :
+
+![image](https://user-images.githubusercontent.com/77858969/211407091-c493aaf0-4c1b-4456-9eb3-80db37279781.png)
+
+Initialisation des arguments par default qu’on va passer au notre DAG ainsi que notre DAG :
+
+![image](https://user-images.githubusercontent.com/77858969/211407236-afb75d1d-d868-4264-8e78-56b4a0d928fb.png)
+
+Définition de la première Task et la deuxième Task :
+
+![image](https://user-images.githubusercontent.com/77858969/211407266-3db4269a-e1a2-45cc-875c-369f003301c2.png)
+
+La tâche de l’extraction et Transformation et l’upload du DATA dans un fichier CSV:
+
+![image](https://user-images.githubusercontent.com/77858969/211407320-f3d23818-ebd5-434f-991e-53af242e3bd2.png)
+
+La tâche de l’upload du data dans une base de données :
+
+![image](https://user-images.githubusercontent.com/77858969/211407412-a9abe42e-32d0-4182-a6de-964afdb054a0.png)
+
+Et donc la résultat en sqlLite doit affiche comme ca :
+
+![image](https://user-images.githubusercontent.com/77858969/211407486-942dc96f-6716-4691-b1bf-c8c65b19c3c5.png)
